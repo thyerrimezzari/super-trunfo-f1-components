@@ -1,20 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from "react-native";
+import { Button, PaperProvider } from "react-native-paper";
+import Driver from "./components/Driver.jsx";
+import { drivers } from "./data/drivers.js";
+import { useState } from "react";
 
 export default function App() {
+
+  const [driver, setDriver] = useState(drivers[0]);
+
+  const sortDriver = () => {
+    const random = Math.floor(Math.random() * drivers.length);
+    setDriver(drivers[random]);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <PaperProvider>
+      <View style={styles.container}>
+        <Driver driver={driver}></Driver>
+        <Button mode="contained" onPress={sortDriver}>
+          Sortear Piloto
+        </Button>
+      </View>
+    </PaperProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
-  },
+    padding: 16,
+  }
 });
